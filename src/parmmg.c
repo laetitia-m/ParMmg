@@ -159,6 +159,9 @@ int main( int argc, char *argv[] )
   distributedInput = 0;
 
   switch ( fmtin ) {
+  case ( MMG5_FMT_VtkVtk ):
+    if ( iermesh==0 ) fprintf(stdout,"  ## WARNING: Input %s under development .\n",MMG5_Get_formatName(fmtin));
+
   case ( MMG5_FMT_MeditASCII ): case ( MMG5_FMT_MeditBinary ):
 
     // Algiane: Dirty (to be discussed, I don't have a clean solution)
