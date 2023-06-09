@@ -2199,6 +2199,25 @@ int PMMG_usage( PMMG_pParMesh parmesh, char * const prog);
 
 /**
  * \param parmesh pointer toward the parmesh structure.
+ * \param filename name of the vtu file.
+ * \return 0 if failed, 1 otherwise.
+ *
+ * Load the mesh data, the metric, and the ls from a vtu file in
+ * a centralized parmesh.
+ *
+ * \remark Fortran interface:
+ * >   SUBROUTINE PMMG_LOADVTUMESH(parmesh,filename,strlen,retval)\n
+ * >     MMG5_DATA_PTR_T, INTENT(INOUT) :: parmesh\n
+ * >     CHARACTER(LEN=*), INTENT(IN)   :: filename\n
+ * >     INTEGER, INTENT(IN)            :: strlen\n
+ * >     INTEGER, INTENT(OUT)           :: retval\n
+ * >   END SUBROUTINE\n
+ *
+ */
+  int PMMG_loadVtuMesh(PMMG_pParMesh parmesh,const char *filename);
+
+/**
+ * \param parmesh pointer toward the parmesh structure.
  * \param filename name of file.
  * \return 0 if failed, 1 otherwise.
  *

@@ -162,6 +162,24 @@ int main( int argc, char *argv[] )
   case ( MMG5_FMT_VtkVtk ):
     if ( iermesh==0 ) fprintf(stdout,"  ## WARNING: Input %s under development .\n",MMG5_Get_formatName(fmtin));
 
+    break;
+
+  case ( MMG5_FMT_VtkVtu ):
+    if ( iermesh==0 ) fprintf(stdout,"  ## WARNING: Input %s under development .\n",MMG5_Get_formatName(fmtin));
+    iermesh = PMMG_loadVtuMesh(parmesh,parmesh->meshin);
+    MPI_Bcast( &iermesh,     1, MPI_INT, parmesh->info.root, parmesh->comm );
+
+    parmesh->info.fmtout = fmtout;
+
+    break;
+
+  case PMMG_FMT_HDF5:
+    ier = PMMG_loadMesh_hdf5( parmesh, parmesh->meshin );
+    parmesh->info.fmtout = fmtout;
+    distributedInput = 1;
+
+    break;
+
   case ( MMG5_FMT_MeditASCII ): case ( MMG5_FMT_MeditBinary ):
 
     // Algiane: Dirty (to be discussed, I don't have a clean solution)
@@ -326,13 +344,6 @@ int main( int argc, char *argv[] )
         goto check_mesh_loading;
       }
     }
-    break;
-
-  case PMMG_FMT_HDF5:
-    ier = PMMG_loadMesh_hdf5( parmesh, parmesh->meshin );
-    parmesh->info.fmtout = fmtout;
-    distributedInput = 1;
-
     break;
 
   default:
