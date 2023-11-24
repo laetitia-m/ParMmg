@@ -38,6 +38,7 @@ IF( BUILD_TESTING )
         add_test( NAME ${MESH}-${NP}
           COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
           ${CI_DIR}/Cube/${MESH}.meshb
+          -mmg-d -d
           -out ${CI_DIR_RESULTS}/${MESH}-${NP}-out.mesh
           -m 11000 -mesh-size ${mesh_size} ${myargs})
       endforeach()
@@ -49,6 +50,7 @@ IF( BUILD_TESTING )
         add_test( NAME cube-unit-coarse-${MESH}-${NP}
           COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
           ${CI_DIR}/Cube/cube-unit-coarse.meshb
+          -mmg-d -d
           -sol ${CI_DIR}/Cube/cube-unit-coarse-${MESH}.sol
           -out ${CI_DIR_RESULTS}/${MESH}-${NP}-out.mesh
           -mesh-size ${mesh_size} ${myargs} )
@@ -62,6 +64,7 @@ IF( BUILD_TESTING )
         add_test( NAME ${TYPE}-torus-with-planar-shock-${NP}
           COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
           ${CI_DIR}/Torus/torusholes.mesh
+          -mmg-d -d
           -sol ${CI_DIR}/Torus/torusholes.sol
           -out ${CI_DIR_RESULTS}/${TYPE}-torus-with-planar-shock-${NP}-out.mesh
           -mesh-size ${mesh_size} ${myargs} )
@@ -79,6 +82,7 @@ IF( BUILD_TESTING )
       add_test( NAME Sphere-${NP}
         COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
         ${CI_DIR}/Sphere/sphere.meshb
+        -mmg-d -d
         -out ${CI_DIR_RESULTS}/sphere-${NP}-out.mesh
         -mesh-size ${mesh_size} ${myargs} )
     endforeach()
@@ -90,6 +94,7 @@ IF( BUILD_TESTING )
           COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
           -${OPTION}
           ${CI_DIR}/Sphere/sphere.meshb
+          -mmg-d -d
           -out ${CI_DIR_RESULTS}/sphere-${OPTION}-${NP}-out.mesh
           -mesh-size ${mesh_size} ${myargs} )
       endforeach()
@@ -150,6 +155,7 @@ IF( BUILD_TESTING )
           COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
           ${test_option} ${test_val}
           ${CI_DIR}/Sphere/sphere.meshb
+          -mmg-d -d
           -out ${CI_DIR_RESULTS}/sphere-${test_name}-${NP}-out.mesh
           -m 11000 -mesh-size ${test_mesh_size} ${myargs} )
       ENDFOREACH()
@@ -159,6 +165,7 @@ IF( BUILD_TESTING )
     add_test( NAME opnbdy_peninsula-6
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 6 $<TARGET_FILE:${PROJECT_NAME}>
       -opnbdy
+      -mmg-d -d
       ${CI_DIR}/OpnBdy_peninsula/peninsula.mesh
       -out ${CI_DIR_RESULTS}/opnbdy-peninsula.o.mesh
       )
@@ -166,6 +173,7 @@ IF( BUILD_TESTING )
     add_test( NAME opnbdy_island-6
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 6 $<TARGET_FILE:${PROJECT_NAME}>
       -opnbdy
+      -mmg-d -d
       ${CI_DIR}/OpnBdy_island/island.mesh
       -out ${CI_DIR_RESULTS}/opnbdy-island.o.mesh
       )
@@ -178,12 +186,14 @@ IF( BUILD_TESTING )
 
     add_test( NAME opnbdy_island-8
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 8 $<TARGET_FILE:${PROJECT_NAME}>
+      -mmg-d -d
       -opnbdy -distributed-output
       ${CI_DIR}/OpnBdy_island/island.mesh
       -out ${CI_DIR_RESULTS}/opnbdy-island-distrib.o.mesh
       )
     add_test( NAME opnbdy_island-8-rerun
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 8 $<TARGET_FILE:${PROJECT_NAME}>
+      -mmg-d -d
       -opnbdy -centralized-output
       ${CI_DIR_RESULTS}/opnbdy-island-distrib.o.mesh
       )
@@ -191,6 +201,7 @@ IF( BUILD_TESTING )
 
     add_test( NAME multidom_wave-8
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 8 $<TARGET_FILE:${PROJECT_NAME}>
+      -mmg-d -d
       -distributed-output -ar 89 -nobalance
       ${CI_DIR}/WaveSurface/wave.mesh
       -out ${CI_DIR_RESULTS}/multidom-wave-distrib.o.mesh
@@ -198,6 +209,7 @@ IF( BUILD_TESTING )
       )
     add_test( NAME multidom_wave-8-rerun
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 8 $<TARGET_FILE:${PROJECT_NAME}>
+      -mmg-d -d
       -centralized-output -ar 89
       ${CI_DIR_RESULTS}/multidom-wave-distrib.o.mesh
       ${myargs}
@@ -207,6 +219,7 @@ IF( BUILD_TESTING )
 
     add_test( NAME multidom_wave-8-distrib_parRidge
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 8 $<TARGET_FILE:${PROJECT_NAME}>
+      -mmg-d -d
       -centralized-output -ar 89
       ${CI_DIR}/WaveSurface_distrib/multidom-wave-distrib.o.mesh
       -out ${CI_DIR_RESULTS}/multidom-wave-distrib_parRidge-out.mesh
@@ -225,6 +238,7 @@ IF( BUILD_TESTING )
     add_test( NAME PvtuOut-RenameOut-2
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/LevelSet/centralized/3D-cube.mesh
+      -mmg-d -d
       -out ${CI_DIR_RESULTS}/3D-cube-PvtuOut-2.a.o.pvtu)
 
     set_property(TEST PvtuOut-RenameOut-2
@@ -240,6 +254,7 @@ IF( BUILD_TESTING )
     add_test( NAME InterpolationFields-withMet-4
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 4 $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/Interpolation/coarse.meshb
+      -mmg-d -d
       -out ${CI_DIR_RESULTS}/InterpolationFields-withMet-withFields-4-out.mesh
       -field ${CI_DIR}/Interpolation/sol-fields-coarse.sol
       -sol field3_iso-coarse.sol
@@ -248,6 +263,7 @@ IF( BUILD_TESTING )
     add_test( NAME InterpolationFields-hsiz-4
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 4 $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/Interpolation/coarse.meshb
+      -mmg-d -d
       -out ${CI_DIR_RESULTS}/InterpolationFields-hsiz-withFields-4-out.mesh
       -field ${CI_DIR}/Interpolation/sol-fields-coarse.sol
       -mesh-size 60000 -hsiz 0.2 ${myargs} )
@@ -255,6 +271,7 @@ IF( BUILD_TESTING )
     add_test( NAME InterpolationFields-noMet-withFields-4
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 4 $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/Interpolation/coarse.meshb
+      -mmg-d -d
       -out ${CI_DIR_RESULTS}/InterpolationFields-noMet-withFields-4-out.mesh
       -field ${CI_DIR}/Interpolation/sol-fields-coarse.sol
       -mesh-size 60000 ${myargs} )
@@ -262,6 +279,7 @@ IF( BUILD_TESTING )
     add_test( NAME InterpolationFields-refinement-4
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 4 $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/Cube/cube-unit-coarse
+      -mmg-d -d
       -out ${CI_DIR_RESULTS}/InterpolationFields-refinement-4-out.mesh
       -field ${CI_DIR}/Interpolation/cube-unit-coarse-field.sol ${myargs} )
 
@@ -285,6 +303,7 @@ IF( BUILD_TESTING )
           COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
           ${CI_DIR_RESULTS}/A319_in_a_box_${API_mode}-${NP}.mesh
           -out ${CI_DIR_RESULTS}/DistribSurf-A319-${API_mode}-${NP}-out.mesh
+          -mmg-d -d
           -optim -v 6 -hmin 20 -hausd 5 -centralized-output
           ${myargs} )
 
@@ -301,6 +320,7 @@ IF( BUILD_TESTING )
         ADD_TEST( NAME DistribSphere_NOM-adp-${API_mode}-${NP}
           COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
           ${CI_DIR_RESULTS}/sphere_nom_${API_mode}-${NP}.mesh
+          -mmg-d -d
           -out ${CI_DIR_RESULTS}/DistribSphere_NOM-${API_mode}-${NP}-out.mesh
           -optim -v 6 -hmin 0.5 -hausd 2 -centralized-output
           ${myargs} -niter 3 ) #override previous value of -niter
@@ -318,6 +338,7 @@ IF( BUILD_TESTING )
         ADD_TEST( NAME DistribTorus-adp-${API_mode}-${NP}
           COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
           ${CI_DIR_RESULTS}/torusholes_${API_mode}-${NP}.mesh
+          -mmg-d -d
           -out ${CI_DIR_RESULTS}/torusholes-${API_mode}-${NP}-out.mesh
           -v 6 -centralized-output
           ${myargs} -niter 3 ) #override previous value of -niter
@@ -343,6 +364,7 @@ IF( BUILD_TESTING )
     add_test( NAME ls-CenIn-${NP}
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/LevelSet/centralized/3D-cube.mesh
+      -mmg-d -d
       -ls 0.0
       -sol ${CI_DIR}/LevelSet/centralized/3D-cube-ls.sol
       -out ${CI_DIR_RESULTS}/3D-cube-ls-CenIn-${NP}.o.mesh)
@@ -357,6 +379,7 @@ IF( BUILD_TESTING )
     add_test( NAME ls-arg-option-openlsfile-lsval-${NP}
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/LevelSet/centralized/3D-cube.mesh
+      -mmg-d -d
       -ls 0.0
       -sol ${CI_DIR}/LevelSet/centralized/3D-cube-ls.sol
       -out ${CI_DIR_RESULTS}/ls-arg-option-openlsfile-lsval-${NP}.o.mesh)
@@ -369,6 +392,7 @@ IF( BUILD_TESTING )
     add_test( NAME ls-arg-option-openlsfile-nolsval-${NP}
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/LevelSet/centralized/3D-cube.mesh
+      -mmg-d -d
       -ls
       -sol ${CI_DIR}/LevelSet/centralized/3D-cube-ls.sol
       -out ${CI_DIR_RESULTS}/ls-arg-option-openlsfile-nolsval-${NP}.o.mesh)
@@ -381,6 +405,7 @@ IF( BUILD_TESTING )
     add_test( NAME ls-arg-option-openlsfiledefault-lsval-${NP}
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/LevelSet/centralized/3D-cube.mesh
+      -mmg-d -d
       -ls 0.0
       -out ${CI_DIR_RESULTS}/ls-arg-option-openlsfiledefault-lsval-${NP}.o.mesh)
     set_property(TEST ls-arg-option-openlsfiledefault-lsval-${NP}
@@ -392,6 +417,7 @@ IF( BUILD_TESTING )
     add_test( NAME ls-arg-option-openlsfiledefault-nolsval-${NP}
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/LevelSet/centralized/3D-cube.mesh
+      -mmg-d -d
       -ls
       -out ${CI_DIR_RESULTS}/ls-arg-option-openlsfiledefault-nolsval-${NP}.o.mesh)
     set_property(TEST ls-arg-option-openlsfiledefault-nolsval-${NP}
@@ -403,6 +429,7 @@ IF( BUILD_TESTING )
   add_test( NAME ls-CenIn-met-${NP}
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
     ${CI_DIR}/LevelSet/centralized/3D-cube.mesh
+    -mmg-d -d
     -ls 0.0
     -sol ${CI_DIR}/LevelSet/centralized/3D-cube-ls.sol
     -met ${CI_DIR}/LevelSet/centralized/3D-cube-metric.sol
@@ -414,6 +441,7 @@ IF( BUILD_TESTING )
     add_test( NAME ls-CenIn-DisOut-${NP}
       COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
       ${CI_DIR}/LevelSet/centralized/3D-cube.mesh
+      -mmg-d -d
       -ls 0.0
       -sol ${CI_DIR}/LevelSet/centralized/3D-cube-ls.sol
       -out ${CI_DIR_RESULTS}/3D-cube-ls-CenIn-DisOut-${NP}-out.pvtu)
@@ -431,6 +459,7 @@ IF( BUILD_TESTING )
   add_test( NAME ls-DisIn-ReadLs-2
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:${PROJECT_NAME}>
     ${CI_DIR}/LevelSet/distributed/3D-cube.mesh -v 10
+    -mmg-d -d
     -ls 0.01
     -sol ${CI_DIR}/LevelSet/distributed/3D-cube-ls.sol
     -out ${CI_DIR_RESULTS}/ls-DisIn-ReadLs-2.o.mesh)
@@ -445,48 +474,56 @@ IF( BUILD_TESTING )
   add_test( NAME Medit-DisIn-MeshOnly-2
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:${PROJECT_NAME}>
     ${CI_DIR}/Parallel_IO/Medit/1p/cube-unit-coarse.mesh -v 5
+    -mmg-d -d
     -out ${CI_DIR_RESULTS}/Medit-DisIn-MeshOnly-2.o.h5)
 
   ## Medit distributed with npart = 2 and  npartin = 1, mesh+met and hdf5 output using .xdmf ext
   add_test( NAME Medit-DisIn-MeshAndMet-2
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:${PROJECT_NAME}>
     -in ${CI_DIR}/Parallel_IO/Medit/1p/cube-unit-coarse-with-met -v 5
+    # -mmg-d -d
     -out ${CI_DIR_RESULTS}/Medit-DisIn-MeshAndMet-2.o.xdmf)
 
   ## Medit distributed with npart = 4 and  npartin = 4, only mesh .h5 ext
   add_test( NAME Medit-DisIn-MeshOnly-4
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 4 $<TARGET_FILE:${PROJECT_NAME}>
     -in ${CI_DIR}/Parallel_IO/Medit/4p/cube-unit-coarse.mesh -v 5
+    -mmg-d -d
     ${CI_DIR_RESULTS}/Medit-DisIn-MeshOnly-4.o.h5)
 
   ## Medit distributed with npart = 6 and  npartin = 4, only mesh .xdmf ext
   add_test( NAME Medit-DisIn-MeshOnly-6
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 6 $<TARGET_FILE:${PROJECT_NAME}>
     ${CI_DIR}/Parallel_IO/Medit/4p/cube-unit-coarse -v 5
+    -mmg-d -d
     ${CI_DIR_RESULTS}/Medit-DisIn-MeshOnly-6.o.xdmf)
 
   ## hdf5 distributed with npart = 2 and  npartin = 1, only mesh and h5 output
   add_test( NAME hdf5-DisIn-MeshOnly-2
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:${PROJECT_NAME}>
     ${CI_DIR}/Parallel_IO/hdf5/1p/cube-unit-coarse.h5 -v 5
+    -mmg-d -d
     -out ${CI_DIR_RESULTS}/hdf5-DisIn-MeshOnly-2.o.h5)
 
   ## hdf5 distributed with npart = 2 and  npartin = 1, mesh+met and xdmf (h5) output
   add_test( NAME hdf5-DisIn-MeshAndMet-2
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:${PROJECT_NAME}>
     ${CI_DIR}/Parallel_IO/hdf5/1p/cube-unit-coarse-with-met.h5 -v 5
+    -mmg-d -d
     -out ${CI_DIR_RESULTS}/hdf5-DisIn-MeshAndMet-2.o.xdmf)
 
   ## hdf5 distributed with npart = 8 and  npartin = 4, mesh+met and h5 output
   add_test( NAME hdf5-DisIn-MeshAndMet-8
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 8 $<TARGET_FILE:${PROJECT_NAME}>
     -in ${CI_DIR}/Parallel_IO/hdf5/4p/cube-unit-coarse-with-met.h5 -v 5
+    -mmg-d -d
     ${CI_DIR_RESULTS}/hdf5-DisIn-MeshAndMet-8.o.h5)
 
   ## hdf5 distributed with npart = 8 and  npartin = 4, mesh only and medit centralized output
   add_test( NAME hdf5-DisIn-MeshOnly-8
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 8 $<TARGET_FILE:${PROJECT_NAME}>
     -in ${CI_DIR}/Parallel_IO/hdf5/4p/cube-unit-coarse.h5 -v 5 -centralized-output
+    -mmg-d -d
     -out ${CI_DIR_RESULTS}/hdf5-DisIn-MeshOnly-8.o.mesh)
 
   ## hdf5 distributed with npart = 4 and  npartin = 4, mesh+met and h5 output
@@ -499,6 +536,7 @@ IF( BUILD_TESTING )
   add_test( NAME hdf5-DisIn-MeshOnly-4
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 4 $<TARGET_FILE:${PROJECT_NAME}>
     -in ${CI_DIR}/Parallel_IO/hdf5/4p/cube-unit-coarse.h5 -v 5 -centralized-output
+    -mmg-d -d
     -out ${CI_DIR_RESULTS}/hdf5-DisIn-MeshOnly-8.o.mesh)
 
 
@@ -526,6 +564,7 @@ IF( BUILD_TESTING )
   add_test( NAME fields-DisIn-DisOutVTK-2
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:${PROJECT_NAME}>
     ${CI_DIR}/LevelSet/distributed/3D-cube.mesh -v 10
+    -mmg-d -d
     -field ${CI_DIR}/LevelSet/distributed/3D-cube-fields.sol
     -out ${CI_DIR_RESULTS}/3D-cube-fields-DisIn-DisOutVTK-2-out.pvtu)
 
@@ -541,6 +580,7 @@ IF( BUILD_TESTING )
   add_test( NAME fields-DisIn-DisOutMesh-2
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:${PROJECT_NAME}>
     ${CI_DIR}/LevelSet/distributed/3D-cube.mesh
+    -mmg-d -d
     -field ${CI_DIR}/LevelSet/distributed/3D-cube-fields.sol
     -out ${CI_DIR_RESULTS}/3D-cube-fields-DisIn-DisOutMesh-2.o.mesh)
 
@@ -554,6 +594,7 @@ IF( BUILD_TESTING )
   add_test( NAME hdf5-CenIn-DisOutHdf5-4
     COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 4 $<TARGET_FILE:${PROJECT_NAME}>
     ${CI_DIR}/Interpolation/coarse.meshb -v 5
+    -mmg-d -d
     -out ${CI_DIR_RESULTS}/hdf5-CenIn-DisOutHdf5-4.o.h5)
 
   IF ( (NOT HDF5_FOUND) OR USE_HDF5 MATCHES OFF )
@@ -890,6 +931,7 @@ IF( BUILD_TESTING )
         add_test( NAME ${test_name}-${NP}
           COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} ${NP} $<TARGET_FILE:${PROJECT_NAME}>
           ${input_mesh} -sol ${input_met}
+          -mmg-d -d
           -out ${CI_DIR_RESULTS}/${test_name}-${NP}-out.mesh
           -niter 3 -nobalance -v 10 )
       ENDFOREACH()
@@ -912,13 +954,13 @@ IF( BUILD_TESTING )
       SET ( main_path  ${CI_DIR}/LnkdList_unitTest/main.c )
 
       ADD_LIBRARY_TEST ( ${test_name} ${main_path} "copy_pmmg_headers" "${lib_name}" )
-      ADD_TEST ( NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}> )
+      ADD_TEST ( NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}> -mmg-d -d)
 
       SET ( test_name  API_set_XName )
       SET ( main_path  ${CI_DIR}/API/PMMG_set_XName/main.c )
 
       ADD_LIBRARY_TEST ( ${test_name} ${main_path} "copy_pmmg_headers" "${lib_name}" )
-      ADD_TEST ( NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}> )
+      ADD_TEST ( NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}> -mmg-d -d)
 
       # 2 procs tests
       ADD_LIBRARY_TEST ( opnbdy-along-interface
