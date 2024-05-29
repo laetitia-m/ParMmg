@@ -21,7 +21,7 @@ IF( BUILD_TESTING )
       ENDIF()
       EXECUTE_PROCESS(
         COMMAND ${GIT_EXECUTABLE} -C ${CI_DIR} fetch
-        COMMAND ${GIT_EXECUTABLE} -C ${CI_DIR} checkout 0b1fce5e92fd42514fd75e8542ff67adeb6d77f8
+        COMMAND ${GIT_EXECUTABLE} -C ${CI_DIR} checkout 30c0d63fd85e4190abf43fe4621f88bfb8515cc9
         TIMEOUT 20
         WORKING_DIRECTORY ${CI_DIR}
         #COMMAND_ECHO STDOUT
@@ -626,6 +626,22 @@ IF( BUILD_TESTING )
 
       endforeach()
     endforeach()
+
+    # Toy geom:: ls + no remesh + REQ triangles. Ensure that REQ triangles are preserved
+    add_test( NAME ls-DisIn-toygeom-REQtria
+      COMMAND ${MPIEXEC} ${MPI_ARGS} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:${PROJECT_NAME}>
+      ${CI_DIR}/LevelSet/2p_toygeom/cube-distributed-faces-nomat-edges.mesh -v 5
+      -nomove -noinsert -noswap
+      -ls 0.0
+      -sol ${CI_DIR}/LevelSet/2p_toygeom/cube-ls.sol
+      -centralized-output
+      -out ${CI_DIR_RESULTS}/ls-DisIn-toygeom-REQtria.o.mesh)
+
+      SET(REQtria-preserved "NUMBER OF TRIANGLES            60   REQUIRED         4")
+      SET_PROPERTY(
+        TEST ls-DisIn-toygeom-REQtria
+        PROPERTY PASS_REGULAR_EXPRESSION "${REQtria-preserved}")
+
 
     #***********************
     #** COMPLEX GEOM LS tests
